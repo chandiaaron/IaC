@@ -1,0 +1,32 @@
+# starts with --- (three dashes)
+---
+
+# Name of the play
+- name: install nginx play 
+  # where do you want to install or run this playbook
+  hosts: web
+
+  # gather facts?
+  gather_facts: yes
+
+  # provide admin(sudo) access to this playbook?
+  become: true 
+
+  # instructions - known as "tasks"
+  # task = install nginx web server in target node 
+  tasks:
+
+  # apt update
+  - name: Update all packages
+    ansible.builtin.apt:
+      update_cache: yes
+  
+  # apt upgrade
+  - name: Upgrade all packages
+    ansible.builtin.apt:
+      upgrade: dist
+
+  # install nginx
+  - name: install and configure nginx on target node
+    # use package "nginx", "state=present" means package must be present and installed
+    apt: pkg=nginx state=present
